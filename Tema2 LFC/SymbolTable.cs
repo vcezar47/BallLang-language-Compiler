@@ -19,6 +19,7 @@ namespace Tema2_LFC
         public SymbolType Category { get; set; }
         public int Line { get; set; }
         public object? Value { get; set; }
+        public bool IsConstant { get; set; } = false;
     }
 
     public class FunctionSymbol : Symbol
@@ -27,6 +28,11 @@ namespace Tema2_LFC
         public List<Symbol> Parameters { get; set; } = new List<Symbol>();
         public List<Symbol> LocalVariables { get; set; } = new List<Symbol>();
         public List<(string Type, int Line)> ControlStructures { get; set; } = new List<(string, int)>();
+        public HashSet<string> CallsFunctions { get; set; } = new HashSet<string>();
+        public bool HasReturn { get; set; } = false;
+        public bool IsRecursive { get; set; } = false;
+
+        public bool IsMain => Name == "main";
 
         public FunctionSymbol()
         {

@@ -1,1 +1,3 @@
 Global Variables:
+Name: globalCounter, Type: player, Initialized: null, Line: 4
+Name: MAX_VALUE, Type: player, Initialized: null, Line: 5

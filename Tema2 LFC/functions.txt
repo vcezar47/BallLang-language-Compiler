@@ -1,11 +1,43 @@
 Functions:
-Function: estePrim
-  Return Type: goal
+Function: add
+  Type: iterative, non-main
+  Return Type: player
+  Parameters: player a, player b
+  Local Variables:
+    (None)
+  Control Structures:
+    (None)
+--------------------
+Function: fib
+  Type: recursive, non-main
+  Return Type: player
   Parameters: player n
   Local Variables:
-    player d (Line 4)
+    (None)
   Control Structures:
-    if at line 2
-    for at line 4
-    if at line 5
+    if at line 14
+--------------------
+Function: factorial
+  Type: iterative, non-main
+  Return Type: player
+  Parameters: player n
+  Local Variables:
+    player result (Line 22)
+    player i (Line 23)
+  Control Structures:
+    for at line 23
+--------------------
+Function: main
+  Type: iterative, main
+  Return Type: tactic
+  Parameters: 
+  Local Variables:
+    player x (Line 31)
+    player y (Line 31)
+    player sum (Line 31)
+    player fibResult (Line 34)
+    player factResult (Line 35)
+  Control Structures:
+    if at line 37
+    while at line 43
 --------------------

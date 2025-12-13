@@ -62,6 +62,9 @@ namespace BallLangCompiler
                 foreach (var func in visitor.SymbolTable.GetFunctions())
                 {
                     funcOutput.AppendLine($"Function: {func.Name}");
+                    string funcType = func.IsRecursive ? "recursive" : "iterative";
+                    string mainType = func.IsMain ? "main" : "non-main";
+                    funcOutput.AppendLine($"  Type: {funcType}, {mainType}");
                     funcOutput.AppendLine($"  Return Type: {func.ReturnType}");
                     funcOutput.AppendLine($"  Parameters: {string.Join(", ", func.Parameters.Select(p => $"{p.Type} {p.Name}"))}");
                     

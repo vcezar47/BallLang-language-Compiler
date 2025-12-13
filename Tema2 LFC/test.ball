@@ -1,9 +1,46 @@
-goal estePrim(player n){
-	whistle(n < 2 || n != 2 && n % 2 == 0) 
-		full_time false;
-	matchday(player d = 3; d * d <= n; d += 2){
-		whistle(n % d == 0)
-			full_time false;
-	}
-	full_time true;
+// BALL = const, PLAYER = int, SCORE = double, SALARY = float, TEAM = string, GOAL = bool
+
+// Global variables
+player globalCounter = 0;
+ball player MAX_VALUE = 100;
+
+// Helper function
+player add(player a, player b) {
+    full_time a + b;
+}
+
+// Recursive fibonacci
+player fib(player n) {
+    whistle(n <= 1) {
+        full_time n;
+    }
+    full_time fib(n - 1) + fib(n - 2);
+}
+
+// Iterative factorial
+player factorial(player n) {
+    player result = 1;
+    matchday(player i = 1; i <= n; i++) {
+        result = result * i;
+    }
+    full_time result;
+}
+
+// Main function
+tactic main() {
+    player x = 5, y = 10, sum;
+    sum = add(x, y);
+    
+    player fibResult = fib(6);
+    player factResult = factorial(5);
+    
+    whistle(sum > 10) {
+        globalCounter = globalCounter + 1;
+    } var {
+        globalCounter = 0;
+    }
+    
+    in_play(globalCounter < MAX_VALUE) {
+        globalCounter = globalCounter + 1;
+    }
 }

@@ -101,7 +101,11 @@ program: (globalDeclaration | functionDeclaration)* EOF;
 
 // Declaratii globale 
 globalDeclaration: 
-    (BALL)? type IDENTIFIER (ASSIGN expression)? SEMI;
+    (BALL)? type varDeclarator (COMMA varDeclarator)* SEMI;
+
+// Declarator pentru o singura variabila (nume optional cu initializare)
+varDeclarator:
+    IDENTIFIER (ASSIGN expression)?;
 
 // Tipuri de date
 type: 
@@ -135,7 +139,7 @@ statement:
 
 // Declaratie variabila (locala sau globala)
 variableDeclaration: 
-    (BALL)? type IDENTIFIER (ASSIGN expression)? SEMI;
+    (BALL)? type varDeclarator (COMMA varDeclarator)* SEMI;
 
 // Atribuire
 assignment: 
