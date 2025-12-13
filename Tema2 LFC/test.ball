@@ -1,0 +1,9 @@
+goal estePrim(player n){
+	whistle(n < 2 || n != 2 && n % 2 == 0) 
+		full_time false;
+	matchday(player d = 3; d * d <= n; d += 2){
+		whistle(n % d == 0)
+			full_time false;
+	}
+	full_time true;
+}

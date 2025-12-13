@@ -8,4 +8,18 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.13.1" />
+    <PackageReference Include="Antlr4BuildTasks" Version="12.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Antlr4 Include="BallLang.g4">
+      <CustomToolNamespace>BallLang</CustomToolNamespace>
+    </Antlr4>
+    <None Update="test.ball">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

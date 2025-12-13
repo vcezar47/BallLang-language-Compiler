@@ -1,0 +1,11 @@
+Functions:
+Function: estePrim
+  Return Type: goal
+  Parameters: player n
+  Local Variables:
+    player d (Line 4)
+  Control Structures:
+    if at line 2
+    for at line 4
+    if at line 5
+--------------------
