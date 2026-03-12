@@ -141,14 +141,20 @@ namespace BallLangCompiler
         }
     }
 
-    public class FileErrorListener : BaseErrorListener
+    public class FileErrorListener : IAntlrErrorListener<int>, IAntlrErrorListener<IToken>
     {
         public List<string> Errors { get; } = new List<string>();
 
-        public override void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+        // This handles Lexer errors (where the symbol is represented by an integer/char)
+        public void SyntaxError(TextWriter output, IRecognizer recognizer, int offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
         {
-            string errorType = (recognizer is BallLangLexer) ? "Lexical Error" : "Syntactic Error";
-            Errors.Add($"{errorType} at line {line}:{charPositionInLine} - {msg}");
+            Errors.Add($"Lexical Error at line {line}:{charPositionInLine} - {msg}");
+        }
+
+        // This handles Parser errors (where the symbol is an IToken)
+        public void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+        {
+            Errors.Add($"Syntactic Error at line {line}:{charPositionInLine} - {msg}");
         }
     }
 }
