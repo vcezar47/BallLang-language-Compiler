@@ -46,29 +46,19 @@ The compiler generates several reports during execution to provide insights into
 
 ### errors.txt
 Contains a comprehensive list of all Lexical, Syntactic, and Semantic errors.
-- **General**: Provides detailed messages including line numbers and the nature of the violation. If the program is correct, it confirms no errors were found.
-- **Current Example**: Reports "No lexical, syntactic, or semantic errors found" for the provided test file.
+Provides detailed messages including line numbers and the nature of the violation. If the program is correct, it confirms no errors were found.
 
 ### tokens.txt
 A log of every token identified by the lexer.
-- **General**: Lists tokens in the format `<TYPE, 'value', line_number>`.
-- **Current Example**: Shows tokens for `player`, `globalCounter`, `=`, `0`, etc., mapping them to their respective grammar rules.
+Lists tokens in the format `<TYPE, 'value', line_number>`.
 
 ### global_variables.txt
 A summary of variables declared in the global scope.
-- **General**: Lists the name, type, initialization status, and line number for each global entry.
-- **Current Example**: 
-  - `globalCounter` (Type: `player`, Line: 4)
-  - `MAX_VALUE` (Type: `player`, Constant, Line: 5)
+Lists the name, type, initialization status, and line number for each global entry.
 
 ### functions.txt
 A detailed report on all functions defined in the source code.
-- **General**: Includes return type, parameters, local variables (with line numbers), and a list of internal control structures (`if`, `for`, `while`). It also labels functions as "recursive" or "iterative" and identifies the "main" entry point.
-- **Current Example**:
-  - `add`: Iterative, helper function with 2 parameters.
-  - `fib`: Recursive, identifies the recursive calls and the `whistle` (if) structure.
-  - `factorial`: Iterative, tracks the `matchday` (for) loop and local variables `result` and `i`.
-  - `main`: The entry point, containing various local variables and control structures like `whistle` and `in_play`.
+Includes return type, parameters, local variables (with line numbers), and a list of internal control structures (`if`, `for`, `while`). It also labels functions as "recursive" or "iterative" and identifies the "main" entry point.
 
 ## Project Components
 - **BallLang.g4**: The ANTLR4 grammar specification.
@@ -128,6 +118,69 @@ tactic main() {
         globalCounter = globalCounter + 1;
     }
 }
+```
+
+## Expected Output (Current Example)
+
+Based on the `test.ball` code above, the compiler generates the following reports:
+
+### errors.txt
+```text
+No lexical, syntactic, or semantic errors found.
+```
+
+### global_variables.txt
+```text
+Global Variables:
+Name: globalCounter, Type: player, Initialized: null, Line: 4
+Name: MAX_VALUE, Type: player, Initialized: null, Line: 5
+```
+
+### functions.txt
+```text
+Functions:
+Function: add
+  Type: iterative, non-main
+  Return Type: player
+  Parameters: player a, player b
+  Local Variables:
+    (None)
+  Control Structures:
+    (None)
+--------------------
+Function: fib
+  Type: recursive, non-main
+  Return Type: player
+  Parameters: player n
+  Local Variables:
+    (None)
+  Control Structures:
+    if at line 14
+--------------------
+Function: factorial
+  Type: iterative, non-main
+  Return Type: player
+  Parameters: player n
+  Local Variables:
+    player result (Line 22)
+    player i (Line 23)
+  Control Structures:
+    for at line 23
+--------------------
+Function: main
+  Type: iterative, main
+  Return Type: tactic
+  Parameters: 
+  Local Variables:
+    player x (Line 31)
+    player y (Line 31)
+    player sum (Line 31)
+    player fibResult (Line 34)
+    player factResult (Line 35)
+  Control Structures:
+    if at line 37
+    while at line 43
+--------------------
 ```
 
 ## Requirements
