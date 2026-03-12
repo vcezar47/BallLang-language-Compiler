@@ -1,5 +1,6 @@
 ﻿using Antlr4.Runtime;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,12 @@ namespace BallLangCompiler
 
                 // 2. Lexical Analysis
                 var lexer = new BallLangLexer(inputStream);
+                
+                // Custom Error Listener for Lexical Errors
+                var errorListener = new FileErrorListener();
+                lexer.RemoveErrorListeners();
+                lexer.AddErrorListener(errorListener);
+
                 var tokenStream = new CommonTokenStream(lexer);
                 tokenStream.Fill();
 
@@ -40,6 +47,11 @@ namespace BallLangCompiler
 
                 // 3. Parsing
                 var parser = new BallLangParser(tokenStream);
+                
+                // Custom Error Listener for Syntactic Errors
+                parser.RemoveErrorListeners();
+                parser.AddErrorListener(errorListener);
+
                 var tree = parser.program();
 
                 // 4. Semantic Analysis & Data Collection
@@ -99,11 +111,14 @@ namespace BallLangCompiler
                 Console.WriteLine("Generated functions.txt");
 
                 // Requirement III.4: Errors Report
+                // Combine Lexical/Syntactic errors with Semantic errors
+                var allErrors = errorListener.Errors.Concat(visitor.Errors).ToList();
                 var errorOutput = new StringBuilder();
-                if (visitor.Errors.Any())
+                
+                if (allErrors.Any())
                 {
                     Console.WriteLine("Errors found:");
-                    foreach (var error in visitor.Errors)
+                    foreach (var error in allErrors)
                     {
                         errorOutput.AppendLine(error);
                         Console.WriteLine(error);
@@ -123,6 +138,17 @@ namespace BallLangCompiler
                 Console.WriteLine($"Critical Error: {ex.Message}");
                 Console.WriteLine(ex.StackTrace);
             }
+        }
+    }
+
+    public class FileErrorListener : BaseErrorListener
+    {
+        public List<string> Errors { get; } = new List<string>();
+
+        public override void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+        {
+            string errorType = (recognizer is BallLangLexer) ? "Lexical Error" : "Syntactic Error";
+            Errors.Add($"{errorType} at line {line}:{charPositionInLine} - {msg}");
         }
     }
 }
